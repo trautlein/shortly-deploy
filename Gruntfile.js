@@ -39,11 +39,23 @@ module.exports = function(grunt) {
 
     },
 
+    clean: 'public/dist/*',
+
     eslint: {
       target: [
         // Add list of files to lint here
         'public/client/*.js'
       ]
+    },
+
+    gitpush: {
+      your_target: {
+        options: {
+          remote: 'live',
+          branch: 'master',
+          force: true
+        }
+      }
     },
 
     cssmin: {
@@ -80,6 +92,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-git');
 
   grunt.registerTask('server-dev', function (target) {
     grunt.task.run([ 'nodemon', 'watch' ]);
@@ -93,12 +107,14 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', [ 'clean', 'lint', 'test'
+  grunt.registerTask('build', [ 'clean', 'eslint', 'test'
   ]);
+
+  grunt.registerTask('push', ['gitpush']);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
-      // add your production server task here
+
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
