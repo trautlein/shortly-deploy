@@ -28,11 +28,21 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      options: {
+        mangle: false
+      },
+      my_target: {
+        files: {
+          'public/dist/output.min.js': ['public/dist/built.js']
+        }
+      }
+
     },
 
     eslint: {
       target: [
         // Add list of files to lint here
+        'public/client/*.js'
       ]
     },
 
