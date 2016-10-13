@@ -8,11 +8,14 @@
 // });
 // var db = require('bookshelf')(knex);
 
-var db = require('mongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+mongoose.connect('mongodb://localhost/shortly');
+var db = mongoose.connection;
 
+db.on('error', console.error.bind(console, 'MongoDB '))
 
-db.urlsSchema = new Schema({
+mongoose.urlsSchema = new Schema({
   url: String,
   baseUrl: String,
   code: String,
@@ -21,7 +24,7 @@ db.urlsSchema = new Schema({
   timestamps: { createdAt: 'created_at' }
 });
 
-db.usersSchema = new Schema({
+mongoose.usersSchema = new Schema({
   username: String,
   password: String,
   timestamps: { createdAt: 'created_at' }
